@@ -1,10 +1,12 @@
-package todo.kennard.com.codepathtodo;
+package com.kennard.todo.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import todo.kennard.com.codepathtodo.R;
 
 public class EditItemActivity extends AppCompatActivity {
 

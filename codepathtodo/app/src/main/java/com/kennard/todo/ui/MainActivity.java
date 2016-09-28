@@ -1,6 +1,8 @@
-package todo.kennard.com.codepathtodo;
+package com.kennard.todo.ui;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,10 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
+import com.kennard.todo.data.ToDoPersist;
+import com.kennard.todo.data.TodoContract;
 import java.util.ArrayList;
+
+import todo.kennard.com.codepathtodo.R;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<String> items;
@@ -21,11 +24,14 @@ public class MainActivity extends AppCompatActivity {
     public final static String EDIT_MSG = "com.kennard.edit.MESSAGE";
     public final static int EDIT_ITEM_REQUEST = 1;
     int currentPosition;
+    ToDoPersist storage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        readItems();
+        storage = new ToDoPersist(getApplicationContext());
+        items = storage.readItems();
         lvItems = (ListView) findViewById(R.id.ivItems);
         itemsAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, items );
         lvItems.setAdapter(itemsAdapter);
@@ -36,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                storage.deleteItem(items.get(currentPosition));
                 items.remove(position);
-                writeItems();
                 itemsAdapter.notifyDataSetChanged();
                 return true;
             }
@@ -55,32 +61,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void readItems(){
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try{
-            items = new ArrayList<String>(FileUtils.readLines(todoFile));
-        } catch (Exception ex){
-        items = new ArrayList<String>();
-        }
-    }
 
-    private void writeItems(){
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try{
-      FileUtils.writeLines(todoFile, items);
-        } catch (Exception ex){
-            ex.printStackTrace();
-        }
-    }
 
     public void onAddItem(View v){
         EditText etNewItem = (EditText) (findViewById (R.id.etNewItem));
         String val = etNewItem.getText().toString();
         itemsAdapter.add(val);
         etNewItem.setText("");
-        writeItems();
+        storage.writeItems(val);
     }
 
     private void launchEditActivity(String text){
@@ -94,13 +82,13 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == EDIT_ITEM_REQUEST){
            String val =  data.getStringExtra(EDIT_MSG);
             if (val == null || val.isEmpty()){
+                storage.deleteItem(items.get(currentPosition));
                 items.remove(currentPosition);
             } else {
                 items.set(currentPosition, val);
+                storage.updateItem(val);
             }
-            writeItems();
             itemsAdapter.notifyDataSetChanged();
-
         }
     }
 }
