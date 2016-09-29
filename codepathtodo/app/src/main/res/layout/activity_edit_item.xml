@@ -23,31 +23,112 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Edit Item Below:"
+            android:padding="5dp"
             android:id="@+id/textView"
             android:layout_gravity="left|center_horizontal"
             android:textSize="@dimen/abc_text_size_display_1_material"/>
 
-
-            android:layout_gravity="center_horizontal"/>
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:inputType="textMultiLine"
             android:ems="10"
+            android:padding="5dp"
             android:id="@+id/editItem"
             android:layout_gravity="center_horizontal"/>
+
+
+
+        <RelativeLayout
+                         android:layout_width="fill_parent"
+                         android:layout_height="wrap_content"
+                         android:padding="5dp"
+                        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:id="@+id/imageView"
+            android:src="@mipmap/ic_access_alarms_black_36dp"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:paddingLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/task_item_date"
+                android:text="Test Item Below:"
+                android:layout_toRightOf="@+id/imageView"
+                android:layout_centerInParent="true"
+
+                />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:id="@+id/imgPriority"
+                android:src="@mipmap/ic_flag_black_36dp"
+                android:layout_centerInParent="true"
+                android:layout_alignParentLeft="true"/>
+
+        <RadioGroup
+            android:layout_toRightOf="@+id/imgPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:id="@+id/radioPriority">
+            <RadioButton
+                android:id="@+id/priorityUrgent"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:text="Urgent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/red"
+                />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:id="@+id/priorityNormal"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:text="Normal"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/teal"
+                android:buttonTint="@color/teal"
+                />
+        </RadioGroup>
+
+        </RelativeLayout>>
 
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="Save"
+            android:padding="5dp"
             android:id="@+id/button"
             android:layout_gravity="left|center_horizontal"
             android:onClick="onSave"/>
+
 
     </LinearLayout>
 </RelativeLayout>

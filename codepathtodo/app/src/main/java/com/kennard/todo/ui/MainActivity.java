@@ -11,15 +11,19 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.kennard.todo.adapter.Task;
 import com.kennard.todo.data.ToDoPersist;
 import com.kennard.todo.data.TodoContract;
 import java.util.ArrayList;
+import java.util.Date;
+
+import com.kennard.todo.adapter.TaskAdapter;
 
 import todo.kennard.com.codepathtodo.R;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<String> items;
-    ArrayAdapter<String> itemsAdapter;
+    ArrayList<Task> items;
+    TaskAdapter itemsAdapter;
     ListView lvItems;
     public final static String EDIT_MSG = "com.kennard.edit.MESSAGE";
     public final static int EDIT_ITEM_REQUEST = 1;
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         storage = new ToDoPersist(getApplicationContext());
         items = storage.readItems();
         lvItems = (ListView) findViewById(R.id.ivItems);
-        itemsAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, items );
+        itemsAdapter = new TaskAdapter(this, items);
         lvItems.setAdapter(itemsAdapter);
         setupListViewListener();
     }
@@ -53,42 +57,43 @@ public class MainActivity extends AppCompatActivity {
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String val = items.get(position);
+                Task val = items.get(position);
                 currentPosition = position;
-                launchEditActivity(val);
+                launchEditActivity(val.mTask);
             }
         });
-
     }
-
-
 
     public void onAddItem(View v){
         EditText etNewItem = (EditText) (findViewById (R.id.etNewItem));
         String val = etNewItem.getText().toString();
-        itemsAdapter.add(val);
+        Task task = new Task(val, new Date(), Task.NORMAL);
+        itemsAdapter.add(task);
         etNewItem.setText("");
-        storage.writeItems(val);
+        storage.writeItems(task);
     }
 
     private void launchEditActivity(String text){
         Intent intent = new Intent(this, EditItemActivity.class);
-        intent.putExtra(EDIT_MSG, text);
+        Task task = items.get(currentPosition);
+        intent.putExtra(EDIT_MSG, task);
         startActivityForResult(intent,EDIT_ITEM_REQUEST );
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == EDIT_ITEM_REQUEST){
-           String val =  data.getStringExtra(EDIT_MSG);
-            if (val == null || val.isEmpty()){
-                storage.deleteItem(items.get(currentPosition));
+            Task result = data.getParcelableExtra(EDIT_MSG);
+            if (result.mTask == null || result.mTask.isEmpty()){
+                Task task = items.get(currentPosition);
+                storage.deleteItem(task);
                 items.remove(currentPosition);
             } else {
-                items.set(currentPosition, val);
-                storage.updateItem(val);
+                items.set(currentPosition, result);
+                storage.updateItem(result);
             }
             itemsAdapter.notifyDataSetChanged();
         }
     }
+
 }
