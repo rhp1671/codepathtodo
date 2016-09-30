@@ -29,13 +29,11 @@ public class TodoContract {
         public static final String COLUMN_TASKS = "tasks";
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_PRIORITY = "priority";
+        public static final String COLUMN_KEY = "key";
 
-        public static Uri buildTodoUri(long id){
+        public static Uri buildTodoUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
     }
-
-
-
 }

@@ -1,32 +1,31 @@
 package com.kennard.todo.ui;
 
-import android.content.ContentValues;
-import android.content.Intent;
-import android.database.Cursor;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.kennard.todo.adapter.Task;
 import com.kennard.todo.data.ToDoPersist;
-import com.kennard.todo.data.TodoContract;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+
 
 import com.kennard.todo.adapter.TaskAdapter;
 
 import todo.kennard.com.codepathtodo.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EditItemDialogFragment.EditItemDialogListener {
     ArrayList<Task> items;
     TaskAdapter itemsAdapter;
     ListView lvItems;
     public final static String EDIT_MSG = "com.kennard.edit.MESSAGE";
-    public final static int EDIT_ITEM_REQUEST = 1;
     int currentPosition;
     ToDoPersist storage;
 
@@ -42,13 +41,18 @@ public class MainActivity extends AppCompatActivity {
         setupListViewListener();
     }
 
-    private void setupListViewListener(){
+    private void setupListViewListener() {
         lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                storage.deleteItem(items.get(currentPosition));
-                items.remove(position);
-                itemsAdapter.notifyDataSetChanged();
+                try {
+                    storage.deleteItem(items.get(position));
+                    items.remove(position);
+                    itemsAdapter.notifyDataSetChanged();
+                    currentPosition = position;
+                } catch (Exception ex) {
+                    showToast();
+                }
                 return true;
             }
         });
@@ -59,41 +63,58 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Task val = items.get(position);
                 currentPosition = position;
-                launchEditActivity(val.mTask);
+                showItemDetailDialog();
             }
         });
     }
 
-    public void onAddItem(View v){
-        EditText etNewItem = (EditText) (findViewById (R.id.etNewItem));
+    public void onAddItem(View v) {
+        EditText etNewItem = (EditText) (findViewById(R.id.etNewItem));
         String val = etNewItem.getText().toString();
-        Task task = new Task(val, new Date(), Task.NORMAL);
-        itemsAdapter.add(task);
-        etNewItem.setText("");
-        storage.writeItems(task);
-    }
-
-    private void launchEditActivity(String text){
-        Intent intent = new Intent(this, EditItemActivity.class);
-        Task task = items.get(currentPosition);
-        intent.putExtra(EDIT_MSG, task);
-        startActivityForResult(intent,EDIT_ITEM_REQUEST );
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == EDIT_ITEM_REQUEST){
-            Task result = data.getParcelableExtra(EDIT_MSG);
-            if (result.mTask == null || result.mTask.isEmpty()){
-                Task task = items.get(currentPosition);
-                storage.deleteItem(task);
-                items.remove(currentPosition);
-            } else {
-                items.set(currentPosition, result);
-                storage.updateItem(result);
+        if (!val.isEmpty()) {
+            Date dt = Calendar.getInstance().getTime();
+            Task task = new Task(val,dt, Task.NORMAL, val+dt.getTime());
+            etNewItem.setText("");
+            try {
+                storage.addItem(task);
+                itemsAdapter.add(task);
+            } catch (Exception ex) {
+                showToast();
             }
-            itemsAdapter.notifyDataSetChanged();
         }
     }
 
+
+    @Override
+    public void onFinishEditDialog(Task result) {
+        if (result != null) {
+            try {
+                Task task = items.get(currentPosition);
+                if (result.mTask == null || result.mTask.isEmpty()) {
+                    storage.deleteItem(task);
+                    items.remove(currentPosition);
+                } else {
+                    storage.updateItem(result, task.mKey);
+                    items.set(currentPosition, result);
+
+                }
+                itemsAdapter.notifyDataSetChanged();
+            } catch (Exception ex) {
+                showToast();
+            }
+        }
+    }
+
+    private void showItemDetailDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(EDIT_MSG, items.get(currentPosition));
+        EditItemDialogFragment editDialog = EditItemDialogFragment.newInstance(bundle);
+        editDialog.show(fm, "fragment_alert");
+    }
+
+    public void showToast() {
+        Toast.makeText(this, getResources().getText(R.string.errorMsg),
+                Toast.LENGTH_LONG).show();
+    }
 }

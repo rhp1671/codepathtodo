@@ -21,9 +21,10 @@ public class TodoDbHelper extends SQLiteOpenHelper  {
     public void onCreate(SQLiteDatabase db) {
         final String SQL_CREATE_TODO_TABLE = "CREATE TABLE " + TodoContract.TodoEntry.TABLE_NAME + " (" +
                 TodoContract.TodoEntry._ID + " INTEGER PRIMARY KEY, "+
-                TodoContract.TodoEntry.COLUMN_TASKS + " TEXT NOT NULL UNIQUE, " +
-                TodoContract.TodoEntry.COLUMN_DATE + " INTEGER NOT NULL, " +
-                TodoContract.TodoEntry.COLUMN_PRIORITY + " INTEGER NOT NULL " +
+                TodoContract.TodoEntry.COLUMN_TASKS + " TEXT NOT NULL, " +
+                TodoContract.TodoEntry.COLUMN_DATE + " TEXT NOT NULL, " +
+                TodoContract.TodoEntry.COLUMN_PRIORITY + " INTEGER NOT NULL, " +
+                TodoContract.TodoEntry.COLUMN_KEY + " TEXT NOT NULL UNIQUE" +
                 " )";
 
         db.execSQL(SQL_CREATE_TODO_TABLE);

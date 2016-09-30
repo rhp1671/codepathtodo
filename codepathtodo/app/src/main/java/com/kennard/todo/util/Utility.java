@@ -1,6 +1,7 @@
 package com.kennard.todo.util;
 
 import android.content.Context;
+import android.text.format.Time;
 
 import todo.kennard.com.codepathtodo.R;
 
@@ -9,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by raprasad on 9/28/16.
@@ -16,7 +18,7 @@ import java.util.Date;
 public class Utility {
     public static final String DATE_FORMAT = "yyyyMMMdd";
 
-    public static String getFormattedMonthDay(Context context, long dateInMillis){
+    public static String getFormattedMonthDay(Context context, long dateInMillis) {
         SimpleDateFormat dbDateFormat = new SimpleDateFormat(DATE_FORMAT);
         SimpleDateFormat monthDayFormat = new SimpleDateFormat("MMMM dd");
         String monthDayString = monthDayFormat.format(dateInMillis);
@@ -30,18 +32,25 @@ public class Utility {
         // For the next 5 days: "Wednesday" (just the day name)
         // For all days after that: "Mon Jun 8"
 
-        String dateStr = getFormattedMonthDay(context, dateInMillis);
 
-        Date todayDate = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+        Date todayDate = Calendar.getInstance().getTime();
+        Calendar currentTime = Calendar.getInstance();
+        currentTime.setTime(todayDate);
 
-
-        String todayStr = getDbDateString(todayDate);
         Date inputDate = new Date(dateInMillis);
+        Calendar inputTime = Calendar.getInstance();
+        inputTime.setTime(inputDate);
+
+        int inputDay = inputTime.get(Calendar.DAY_OF_YEAR);
+        int currentDay = currentTime.get(Calendar.DAY_OF_YEAR);
+
+        String dateStr = getFormattedMonthDay(context, dateInMillis);
+        String todayStr = getDbDateString(todayDate);
+
 
         // If the date we're building the String for is today's date, the format
         // is "Today, June 24"
-        if (todayStr.equals(dateStr)) {
+        if (inputDay == currentDay) {
             String today = context.getString(R.string.today);
             int formatId = R.string.format_full_friendly_date;
             return String.format(context.getString(
@@ -70,7 +79,7 @@ public class Utility {
         SimpleDateFormat dbDateFormat = new SimpleDateFormat(Utility.DATE_FORMAT);
         try {
             Date inputDate = dbDateFormat.parse(dateStr);
-            Date todayDate = new Date();
+            Date todayDate = Calendar.getInstance().getTime();
             // If the date is today, return the localized version of "Today" instead of the actual
             // day name.
             if (getDbDateString(todayDate).equals(dateStr)) {
@@ -97,7 +106,7 @@ public class Utility {
         }
     }
 
-    public static String getDbDateString(Date date){
+    public static String getDbDateString(Date date) {
         // Because the API returns a unix timestamp (measured in seconds),
         // it must be converted to milliseconds in order to be converted to valid date.
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
@@ -110,6 +119,19 @@ public class Utility {
             return simpleDateFormat.parse(dateString);
         } catch (ParseException e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String formatDateTime(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(date);
+    }
+
+    public static Date formatDateTime(String date) {
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
+        } catch (ParseException e) {
             return null;
         }
     }

@@ -3,6 +3,7 @@ package com.kennard.todo.adapter;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -12,13 +13,15 @@ public class Task implements Parcelable {
     public String mTask;
     public int mPriority;
     public Date mDate;
+    public String mKey;
     public static int URGENT = 2;
     public static int NORMAL = 1;
 
-    public  Task(String task, Date date, int priority){
+    public  Task(String task, Date date, int priority, String key){
         mTask = task;
-        mDate = date == null ? new Date(): date;
+        mDate = date;
         mPriority = priority;
+        mKey = key;
     }
 
     public Task(Parcel source){

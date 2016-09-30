@@ -35,8 +35,6 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         // Lookup view for data population
         TextView taskView = (TextView) convertView.findViewById(R.id.task_detail_textview);
         TextView taskDate = (TextView) convertView.findViewById(R.id.task_item_date);
-       // TextView tvHome = (TextView) convertView.findViewById(R.id.tvHome);
-        // Populate the data into the template view using the data object
         taskView.setText(task.mTask);
         taskDate.setText(Utility.getFriendlyDayString(getContext(), task.mDate.getTime()));
         if (task.mPriority == Task.NORMAL){
@@ -45,9 +43,6 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             taskView.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
 
         }
-        Log.d("===>", "====>" + task.mDate.toString());
-       // tvHome.setText(user.hometown);
-        // Return the completed view to render on screen
         return convertView;
     }
 }

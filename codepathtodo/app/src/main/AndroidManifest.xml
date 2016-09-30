@@ -15,7 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.kennard.todo.ui.EditItemActivity">
+        <activity android:name="com.kennard.todo.ui.EditItemDialogFragment">
         </activity>
         <provider
             android:name = "com.kennard.todo.data.TodoProvider"
