@@ -2,12 +2,10 @@ package com.kennard.todo.ui;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Point;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,9 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -70,6 +66,7 @@ public class EditItemDialogFragment extends DialogFragment {
 
     public static EditItemDialogFragment newInstance(Bundle args) {
         EditItemDialogFragment frag = new EditItemDialogFragment();
+        frag.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
         frag.setArguments(args);
         return frag;
     }
@@ -78,7 +75,7 @@ public class EditItemDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_edit_item, container);
+        return inflater.inflate(R.layout.fragment_edit_item, container);
     }
 
     @Override
@@ -91,6 +88,8 @@ public class EditItemDialogFragment extends DialogFragment {
             taskView.setText(mTask.mTask);
         }
         getDialog().setTitle(getResources().getString(R.string.editTitle));
+        TextView title = (TextView)getDialog().findViewById( android.R.id.title );
+        title.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
         dateView = (TextView) view.findViewById(R.id.task_item_date);
         dateView.setText(Utility.getFriendlyDayString(getContext(), mTask.mDate.getTime()));
         myCalendar.setTime(mTask.mDate);

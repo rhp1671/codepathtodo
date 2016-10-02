@@ -6,34 +6,34 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:padding="@dimen/start_control_margin_padding"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/vertical_margin_padding"
             android:text="Edit Item Below:"
             android:padding="@dimen/fragment_control_padding"
             android:id="@+id/textView"
-            android:layout_gravity="left|center_horizontal"
-            android:textSize="@dimen/abc_text_size_headline_material"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+           />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/start_margin_padding"
             android:inputType="textMultiLine"
             android:ems="10"
-            android:padding="@dimen/start_margin_padding"
+            android:padding="@dimen/fragment_control_padding"
             android:id="@+id/editItem"
-            android:layout_gravity="left|center_horizontal"/>
+           />
 
 
 
         <RelativeLayout
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
-                         android:padding="@dimen/fragment_control_padding"
                         >
 
         <ImageView
@@ -62,7 +62,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/fragment_control_padding"
+
             >
             <ImageView
                 android:layout_width="wrap_content"
@@ -98,20 +98,16 @@
                 android:id="@+id/priorityNormal"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/fragment_control_padding"
-               android:layout_marginRight="@dimen/start_margin_padding"
                 android:layout_weight="1"
                 android:text="Normal"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/teal"
                 android:buttonTint="@color/teal"
                 />
+
         </RadioGroup>
 
-            <Space
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_toRightOf="@id/priorityNormal"
-                />
+
 
         </RelativeLayout>>
 
@@ -121,6 +117,7 @@
         android:padding="5dp"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         >
 
         <Button
@@ -128,7 +125,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:text="@string/save"
             android:padding="5dp"
             android:id="@+id/button"
@@ -140,7 +137,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:text="@string/cancel"
             android:padding="5dp"
             android:id="@+id/buttonCancel"
