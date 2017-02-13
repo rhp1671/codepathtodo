@@ -1,10 +1,10 @@
-# Pre-work - *SimpleTodDo (Android)*
+# Pre-work - *CodePathTodDo (Android)*
 
-**SimpleTodDo** is an android app that allows building a todo list and basic todo items management functionality including adding new items, editing and deleting an existing item.
+**CodePathTodDo** is an android app that allows building a todo list and basic todo items management functionality including adding new items, editing and deleting an existing item.
 
 Submitted by: **RPrasad**
 
-Time spent: **2** hours spent in total
+Time spent: **8** hours spent in total
 
 ## User Stories
 
@@ -26,12 +26,13 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 * [X] Friendly date display, Toast messages for errors
+* [X] Toolbar with icons for edit, delete
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-![Video Walkthrough](codepathdemo2.gif)
+![Video Walkthrough](codepathdemo.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -41,7 +42,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [2016] [RPRASAD]
+    Copyright [2017] [RPRASAD]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

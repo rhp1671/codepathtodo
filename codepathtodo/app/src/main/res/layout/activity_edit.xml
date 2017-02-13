@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.kennard.todo.ui.EditActiviy" >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp"
+        android:background="@color/teal"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+
+<LinearLayout
+    android:id="@+id/activity_edit_activiy"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/start_control_margin_padding"
+   >
+
+
+
+
+    <LinearLayout
+        android:id="@+id/item_layout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/vertical_margin_padding"
+        android:paddingLeft="@dimen/vertical_margin_padding"
+    >
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/vertical_margin_padding"
+            android:layout_weight="1"
+            android:padding="@dimen/fragment_control_padding"
+            android:text="@string/taskName"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+
+        <EditText
+            android:id="@+id/editItem"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:inputType="textMultiLine"
+            android:padding="@dimen/fragment_control_padding"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_date_layout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/vertical_margin_padding"
+    >
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:paddingLeft="15dp"
+            android:src="@mipmap/ic_access_alarms_black_36dp"
+        />
+
+        <TextView
+            android:id="@+id/task_item_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_weight="4"
+            android:paddingLeft="@dimen/fragment_control_padding"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+
+        />
+
+    </LinearLayout>
+    >
+
+    <LinearLayout
+        android:id="@+id/layout_priority"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/vertical_margin_padding"
+    >
+
+        <ImageView
+            android:id="@+id/imgPriority"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_flag_black_36dp"
+        />
+
+        <RadioGroup
+            android:id="@+id/radioPriority"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="horizontal"
+        >
+            <RadioButton
+                android:id="@+id/priorityUrgent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/fragment_control_padding"
+                android:layout_weight="1"
+                android:text="Urgent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/red"
+            />
+
+            <RadioButton
+                android:id="@+id/priorityNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/fragment_control_padding"
+                android:layout_weight="1"
+                android:buttonTint="@color/teal"
+                android:text="Normal"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/teal"
+            />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp">
+
+        <CheckBox
+            android:id="@+id/chkCompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/chk_completed"
+        />
+    </LinearLayout>
+</LinearLayout>
+
+</LinearLayout>

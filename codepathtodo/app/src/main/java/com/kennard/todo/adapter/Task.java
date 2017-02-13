@@ -14,6 +14,7 @@ public class Task implements Parcelable {
     public int mPriority;
     public Date mDate;
     public String mKey;
+    public int mCompleted;
     public static int URGENT = 2;
     public static int NORMAL = 1;
 
@@ -28,6 +29,12 @@ public class Task implements Parcelable {
         mTask=source.readString();
         mDate=new Date(source.readLong());
         mPriority=source.readInt();
+        mKey=source.readString();
+        mCompleted = source.readInt();
+    }
+
+    public Task(){
+
     }
 
     @Override
@@ -40,6 +47,8 @@ public class Task implements Parcelable {
         dest.writeString(mTask);
         dest.writeLong(mDate.getTime());
         dest.writeInt(mPriority);
+        dest.writeString(mKey);
+        dest.writeInt(mCompleted);
     }
 
     public static final Creator<Task> CREATOR = new Creator<Task>() {

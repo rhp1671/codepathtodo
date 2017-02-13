@@ -1,6 +1,7 @@
 package com.kennard.todo.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,7 +42,11 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             taskView.setTextColor(ContextCompat.getColor(getContext(), R.color.teal));
         } else {
             taskView.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
-
+        }
+        if (task.mCompleted == 1){
+            taskView.setPaintFlags(taskView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            taskView.setPaintFlags( taskView.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
         }
         return convertView;
     }
